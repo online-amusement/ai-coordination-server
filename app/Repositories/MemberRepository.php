@@ -25,11 +25,11 @@ class MemberRepository
             ->exists();
     }
 
-    public function findByToken($token)
+    public function findBy($field, $operator, $value)
     {
         return $this->member
             ->newQuery()
-            ->where('api_token', $token)
+            ->where($field, $operator, $value)
             ->first();
     }
 

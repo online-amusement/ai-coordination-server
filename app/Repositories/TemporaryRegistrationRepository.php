@@ -29,11 +29,11 @@ class TemporaryRegistrationRepository
             ]);
     }
 
-    public function findByToken($token)
+    public function findBy($field, $operator, $value)
     {
         return $this->registration
             ->newQuery()
-            ->where("token", $token)
+            ->where($field, $operator, $value)
             ->first();
     }
 
