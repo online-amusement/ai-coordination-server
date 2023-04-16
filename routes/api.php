@@ -26,5 +26,7 @@ Route::prefix('member')->group(function () {
 });
 
 Route::middleware(['cors'])->group(function() {
-
+    Route::prefix('member')->group(function () {
+        Route::get('/', [App\Http\Controllers\MemberController::class, 'member']);
+    });
 });

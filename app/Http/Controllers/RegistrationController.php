@@ -28,7 +28,7 @@ class RegistrationController extends Controller
         $registration = $this->temporaryRegistrationService->registrationCreate($email);
 
         //registrationのemailと一致するユーザー取得
-        $searchMember = $this->temporaryRegistrationService->findByToken($registration->token);
+        $searchMember = $this->temporaryRegistrationService->findBy('api_token', '=', $registration->token);
 
         //member仮登録
         $member = $this->temporaryRegistrationService->temporaryMemberCreate($email,$searchMember->token);
@@ -53,10 +53,10 @@ class RegistrationController extends Controller
         $now = Carbon::now();
 
         //トークンが一致するユーザー取得
-        $member = $this->memberService->findByToken($token);
+        $member = $this->memberService->findBy("api_token", '=', $token);
         
         //有効期限が切れてないか確認するためregistration取得
-        $registration = $this->temporaryRegistrationService->findByToken($token);
+        $registration = $this->temporaryRegistrationService->findBy('api_token', '=', $token);
 
         if($member && $now <= $registration->expiration_date) {
             //memberを更新

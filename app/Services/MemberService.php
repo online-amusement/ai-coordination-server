@@ -13,9 +13,9 @@ class MemberService
         $this->memberRepository = $memberRepository;
     }
 
-    public function findByToken($token)
+    public function findBy($field, $operator, $value)
     {
-        return $this->memberRepository->findByToken($token);
+        return $this->memberRepository->findBy($field, $operator, $value);
     }
 
     public function isExistToken($token)
