@@ -24,3 +24,7 @@ Route::prefix('member')->group(function () {
     //本登録
     Route::post('/official-registration', [App\Http\Controllers\RegistrationController::class, 'officialRegistration']);
 });
+
+Route::middleware(['cors'])->group(function() {
+
+});
