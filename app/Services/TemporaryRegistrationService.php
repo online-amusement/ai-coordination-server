@@ -13,9 +13,9 @@ class TemporaryRegistrationService
         $this->temporaryRegistrationRepository = $temporaryRegistrationRepository;
     }
 
-    public function findBy()
+    public function findBy($field, $operator, $value)
     {
-        return $this->temporaryRegistrationRepository->findBy('api_token', '=', $token);
+        return $this->temporaryRegistrationRepository->findBy($field, $operator, $value);
     }
 
     public function registrationCreate($email)
