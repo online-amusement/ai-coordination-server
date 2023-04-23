@@ -33,10 +33,11 @@ class MemberRepository
             ->first();
     }
 
-    public function updateProfileMember($nickname, $password)
+    public function updateProfileMember($nickname, $password, $token)
     {
         return $this->member
             ->newQuery()
+            ->where("api_token",$token)
             ->update([
                 'nickname' => $nickname,
                 'password' => Hash::make($password),
