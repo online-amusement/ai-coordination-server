@@ -28,7 +28,7 @@ class RegistrationController extends Controller
         $registration = $this->temporaryRegistrationService->registrationCreate($email);
 
         //registrationのemailと一致するユーザー取得
-        $searchMember = $this->temporaryRegistrationService->findBy('api_token', '=', $registration->token);
+        $searchMember = $this->temporaryRegistrationService->findBy('token', '=', $registration->token);
 
         //member仮登録
         $member = $this->temporaryRegistrationService->temporaryMemberCreate($email,$searchMember->token);
