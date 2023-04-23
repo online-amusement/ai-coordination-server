@@ -56,11 +56,11 @@ class RegistrationController extends Controller
         $member = $this->memberService->findBy("api_token", '=', $token);
         
         //有効期限が切れてないか確認するためregistration取得
-        $registration = $this->temporaryRegistrationService->findBy('api_token', '=', $token);
+        $registration = $this->temporaryRegistrationService->findBy('token', '=', $token);
 
         if($member && $now <= $registration->expiration_date) {
             //memberを更新
-            $memberUpdate = $this->memberService->updateProfileMember($nickname, $password);
+            $memberUpdate = $this->memberService->updateProfileMember($nickname, $password, $token);
 
             //本登録が完了した旨のメールを送信
             Mail::to($member->email)->send(new \App\Mail\officialRegistration());

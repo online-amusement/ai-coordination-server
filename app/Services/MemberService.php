@@ -23,8 +23,8 @@ class MemberService
         return $this->memberRepository->isExistToken($token);
     }
 
-    public function updateProfileMember($nickname, $password)
+    public function updateProfileMember($nickname, $password, $token)
     {
-        return $this->memberRepository->updateProfileMember($nickname, $password);
+        return $this->memberRepository->updateProfileMember($nickname, $password, $token);
     }
 }
