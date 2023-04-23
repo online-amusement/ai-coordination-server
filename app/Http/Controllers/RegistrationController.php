@@ -37,7 +37,7 @@ class RegistrationController extends Controller
         Mail::to($email)->send(new \App\Mail\TemporaryRegistration($registration));
 
         return response()->json([
-            "result" => 'OK',
+            "result" => true,
             "status" => 200,
             "message" => '仮登録が完了しました。'
         ]);
@@ -66,14 +66,14 @@ class RegistrationController extends Controller
             Mail::to($member->email)->send(new \App\Mail\officialRegistration());
 
             return response()->json([
-                'result' => 'OK',
+                'result' => true,
                 'status' => 200,
                 'message' => '本登録が完了しました。',
             ]);
         }
 
         return response()->json([
-            'result' => 'OK',
+            'result' => false,
             'status' => 401,
             'message' => '本登録が完了しませんでした。'
         ]);   

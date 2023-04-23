@@ -20,7 +20,7 @@ class MemberController extends Controller
 
         if($member) {
             return response()->json([
-                "result" => 'OK',
+                "result" => true,
                 "status" => 200,
                 "message" => 'ユーザー情報を取得しました。',
                 "data" => $member,
@@ -28,7 +28,7 @@ class MemberController extends Controller
         }
 
         return response()->json([
-            "result" => 'OK',
+            "result" => false,
             "status" => 401,
             "message" => 'ユーザー情報の取得に失敗しました。'
         ]);

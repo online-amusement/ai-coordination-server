@@ -26,7 +26,11 @@ Route::prefix('member')->group(function () {
 });
 
 Route::middleware(['cors'])->group(function() {
+    Route::post('/login', [App\Http\Controllers\MemberLoginController::class, 'login']);
+
     Route::prefix('member')->group(function () {
-        Route::get('/', [App\Http\Controllers\MemberController::class, 'member']);
+        Route::middleware(['check.member'])->group(function() {
+            Route::get('/', [App\Http\Controllers\MemberController::class, 'member']);
+        });
     });
 });
