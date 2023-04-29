@@ -33,4 +33,9 @@ Route::middleware(['cors'])->group(function() {
             Route::get('/', [App\Http\Controllers\MemberController::class, 'member']);
         });
     });
+
+    Route::prefix('open-ai')->group(function () {
+        Route::post('/image-create', [App\Http\Controllers\OpenAiController::class, 'imageCreate']);
+        Route::post('/image-edit', [App\Http\Controllers\OpenAiController::class, 'imageEdit']);
+    });
 });
