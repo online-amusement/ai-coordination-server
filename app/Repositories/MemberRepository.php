@@ -45,4 +45,34 @@ class MemberRepository
                 'status' => 1
             ]);
     }
+
+    public function updateMemberEmail($token, $email)
+    {
+        return $this->member
+            ->newQuery()
+            ->where("api_token",$token)
+            ->update([
+                'email' => $email,
+            ]);
+    }
+
+    public function updateMemberNickname($token, $nickname)
+    {
+        return $this->member
+            ->newQuery()
+            ->where("api_token",$token)
+            ->update([
+                'nickname' => $nickname,
+            ]);
+    }
+
+    public function updateMemberPassword($token, $password)
+    {
+        return $this->member
+            ->newQuery()
+            ->where("api_token",$token)
+            ->update([
+                'password' => Hash::make($password),
+            ]);
+    }
 }

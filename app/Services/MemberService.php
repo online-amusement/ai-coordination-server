@@ -27,4 +27,19 @@ class MemberService
     {
         return $this->memberRepository->updateProfileMember($nickname, $password, $token);
     }
+
+    public function updateMemberEmail($token, $email)
+    {
+        return $this->memberRepository->updateMemberEmail($token, $email);
+    }
+
+    public function updateMemberNickname($token, $nickname)
+    {
+        return $this->memberRepository->updateMemberNickname($token, $nickname);
+    }
+
+    public function updateMemberPassword($token, $password)
+    {
+        return $this->memberRepository->updateMemberPassword($token, $password);
+    }
 }
