@@ -37,6 +37,10 @@ Route::middleware(['cors'])->group(function() {
     Route::post('/password-edit', [App\Http\Controllers\MemberApiController::class, 'memberPasswordEdit']);
     });
 
+    Route::prefix("news")->group(function () {
+        Route::get("/", [App\Http\Controllers\NewsController::class, "news"]);
+    });
+
     Route::prefix('open-ai')->group(function () {
         Route::post('/image-create', [App\Http\Controllers\OpenAiController::class, 'imageCreate']);
         Route::post('/image-edit', [App\Http\Controllers\OpenAiController::class, 'imageEdit']);
