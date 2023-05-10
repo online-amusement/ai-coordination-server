@@ -19,15 +19,19 @@
                     <div class="searchMemberDate">
                         <div class="start">
                             <label class="started">登録日時(開始):</label>
-                            <input type="date" v-model="started_at" name="searchStartDate" class="searchStartDate">
+                            <input type="date" v-model="started_at" name="searchStartDate" class="searchStartDate" id="searchStartDate">
                         </div>
                         <div class="wave-line">
                             <label class="line">〜</label>
                         </div>
                         <div class="end">
                             <label class="memberId">登録日時(終了):</label>
-                            <input type="date" v-model="ended_at" name="searchEndDate" class="searchEndDate">
+                            <input type="date" v-model="ended_at" name="searchEndDate" class="searchEndDate" id="searchEndDate">
                         </div>
+                    </div>
+                    <div class="searchSort">
+                        <label class="sort">ソート</label>
+                        <input type="text" v-model="sort" name="searchSort" id="searchSort" class="searchSort">
                     </div>
                 </div>
                 <div class="form-btn">
@@ -75,7 +79,6 @@
     </div>
 </template>
 <script>
-import { ref } from 'vue';
 export default {
     props:['members'],
     data:() => ({
@@ -83,6 +86,7 @@ export default {
         status: null,
         started_at: null,
         ended_at: null,
+        sort: null,
         loader: false,
     }),
     mounted() {
@@ -90,7 +94,20 @@ export default {
     },
     methods: {
         searchMember() {
-
+            let params = {
+                'searchMemberId': this.memberId,
+                'searchStatus': this.status
+            }
+            let baseUrl = "http://local.ai-coordination/home";
+            let url = baseUrl + "?" + Object.entries(params).map((e) => {
+                let key = e[0];
+                let value = encodeURI(e[1]);
+                return `${key}=${value}`;
+            }).join("&");
+            console.log(url)
+            let queryParams = window.location.search
+            const getSearchParams = new URLSearchParams(queryParams)
+            console.log(getSearchParams)
         },
         clear() {
 

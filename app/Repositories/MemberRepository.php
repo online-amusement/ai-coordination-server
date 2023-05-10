@@ -78,7 +78,7 @@ class MemberRepository
             ]);
     }
 
-    public function search($memberId, $status, $startDate, $endDate, $sort)
+    public function search($memberId, $status, $started_at, $ended_at, $sort)
     {
         $members = $this->member->newQuery();
 
@@ -90,10 +90,10 @@ class MemberRepository
             $members = $members->where("status", "=", "{$status}");
         }
 
-        if($startDate != null && $endDate != null) {
+        if($started_at != null && $ended_at != null) {
             $members = $members
-                ->where("created_at", ">", "{$startDate}")
-                ->where("created_at", "<","{$endDate}");
+                ->where("created_at", ">", "{$started_at}")
+                ->where("created_at", "<","{$ended_at}");
         }
         
         

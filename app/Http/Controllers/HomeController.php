@@ -25,9 +25,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {   
-        $members = Member::search();
-        dd($members);
-        exit;
+        $memberId = $request->get("searchMemberId");
+        $status = $request->get("searchStatus");
+        $started_at = $request->get("searchStartDate");
+        $ended_at = $request->get("searchEndDate");
+        $sort = $request->get("searchSort");
+
+        $members = $this->memberService->search($memberId, $status, $started_at, $ended_at, $sort);
         
 
         $members = json_encode($members);

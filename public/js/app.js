@@ -5312,7 +5312,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['members'],
   data: function data() {
@@ -5321,6 +5320,7 @@ __webpack_require__.r(__webpack_exports__);
       status: null,
       started_at: null,
       ended_at: null,
+      sort: null,
       loader: false
     };
   },
@@ -5328,7 +5328,22 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.members);
   },
   methods: {
-    searchMember: function searchMember() {},
+    searchMember: function searchMember() {
+      var params = {
+        'searchMemberId': this.memberId,
+        'searchStatus': this.status
+      };
+      var baseUrl = "http://local.ai-coordination/home";
+      var url = baseUrl + "?" + Object.entries(params).map(function (e) {
+        var key = e[0];
+        var value = encodeURI(e[1]);
+        return "".concat(key, "=").concat(value);
+      }).join("&");
+      console.log(url);
+      var queryParams = window.location.search;
+      var getSearchParams = new URLSearchParams(queryParams);
+      console.log(getSearchParams);
+    },
     clear: function clear() {}
   }
 });
@@ -5432,7 +5447,8 @@ var render = function render() {
     staticClass: "searchStartDate",
     attrs: {
       type: "date",
-      name: "searchStartDate"
+      name: "searchStartDate",
+      id: "searchStartDate"
     },
     domProps: {
       value: _vm.started_at
@@ -5457,7 +5473,8 @@ var render = function render() {
     staticClass: "searchEndDate",
     attrs: {
       type: "date",
-      name: "searchEndDate"
+      name: "searchEndDate",
+      id: "searchEndDate"
     },
     domProps: {
       value: _vm.ended_at
@@ -5468,7 +5485,33 @@ var render = function render() {
         _vm.ended_at = $event.target.value;
       }
     }
-  })])])]), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "searchSort"
+  }, [_c("label", {
+    staticClass: "sort"
+  }, [_vm._v("ソート")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.sort,
+      expression: "sort"
+    }],
+    staticClass: "searchSort",
+    attrs: {
+      type: "text",
+      name: "searchSort",
+      id: "searchSort"
+    },
+    domProps: {
+      value: _vm.sort
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.sort = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "form-btn"
   }, [_c("div", {
     staticClass: "search"
