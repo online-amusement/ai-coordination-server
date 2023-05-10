@@ -42,4 +42,9 @@ class MemberService
     {
         return $this->memberRepository->updateMemberPassword($token, $password);
     }
+
+    public function search($memberId, $status, $startDate, $endDate, $sort)
+    {
+        return $this->memberRepository->search($memberId, $status, $startDate, $endDate, $sort);
+    }
 }

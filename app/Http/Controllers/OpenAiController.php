@@ -38,7 +38,7 @@ class OpenAiController extends Controller
 
         $response = OpenAI::images()->edit([
             'image' => fopen($image, 'r'),
-            'mask' => fopen('image_edit_mask.png', 'r'),
+            'mask' => fopen($image2, 'r'),
             'prompt' => $text,
             'n' => 1,
             'size' => '256x256',

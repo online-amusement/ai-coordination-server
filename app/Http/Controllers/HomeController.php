@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\MemberService;
+use App\Models\Member;
 
 class HomeController extends Controller
 {
@@ -11,9 +13,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(MemberService $memberService)
     {
-        $this->middleware('auth');
+        $this->memberService = $memberService;
     }
 
     /**
@@ -21,8 +23,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
+    public function index(Request $request)
+    {   
+        $members = Member::search();
+        dd($members);
+        exit;
+        
+
+        $members = json_encode($members);
+
+        return view('home', compact('members'));
     }
 }
