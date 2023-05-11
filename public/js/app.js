@@ -5320,7 +5320,10 @@ __webpack_require__.r(__webpack_exports__);
       status: null,
       started_at: null,
       ended_at: null,
-      sort: null,
+      sort: {
+        asc: '昇順',
+        desc: '降順'
+      },
       loader: false
     };
   },
@@ -5331,7 +5334,10 @@ __webpack_require__.r(__webpack_exports__);
     searchMember: function searchMember() {
       var params = {
         'searchMemberId': this.memberId,
-        'searchStatus': this.status
+        'searchStatus': this.status,
+        'searchStartDate': this.started_at,
+        'searchEndDate': this.ended_at,
+        'searchSort': this.sort
       };
       var baseUrl = "http://local.ai-coordination/home";
       var url = baseUrl + "?" + Object.entries(params).map(function (e) {
@@ -5340,11 +5346,13 @@ __webpack_require__.r(__webpack_exports__);
         return "".concat(key, "=").concat(value);
       }).join("&");
       console.log(url);
-      var queryParams = window.location.search;
-      var getSearchParams = new URLSearchParams(queryParams);
-      console.log(getSearchParams);
     },
-    clear: function clear() {}
+    clear: function clear() {
+      this.memberId = '';
+      this.status = '';
+      this.started_at = '';
+      this.ended_at = '';
+    }
   }
 });
 
@@ -5489,7 +5497,7 @@ var render = function render() {
     staticClass: "searchSort"
   }, [_c("label", {
     staticClass: "sort"
-  }, [_vm._v("ソート")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("ソート")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -5498,20 +5506,21 @@ var render = function render() {
     }],
     staticClass: "searchSort",
     attrs: {
-      type: "text",
       name: "searchSort",
       id: "searchSort"
     },
-    domProps: {
-      value: _vm.sort
-    },
     on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.sort = $event.target.value;
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.sort = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
       }
     }
-  })])]), _vm._v(" "), _c("div", {
+  }, [_c("option", [_vm._v("昇順")]), _vm._v(" "), _c("option", [_vm._v("降順")])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-btn"
   }, [_c("div", {
     staticClass: "search"

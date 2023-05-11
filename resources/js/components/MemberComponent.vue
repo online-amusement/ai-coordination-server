@@ -31,7 +31,10 @@
                     </div>
                     <div class="searchSort">
                         <label class="sort">ソート</label>
-                        <input type="text" v-model="sort" name="searchSort" id="searchSort" class="searchSort">
+                        <select v-model="sort" name="searchSort" id="searchSort" class="searchSort">
+                            <option>昇順</option>
+                            <option>降順</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-btn">
@@ -86,7 +89,10 @@ export default {
         status: null,
         started_at: null,
         ended_at: null,
-        sort: null,
+        sort: {
+            asc: '昇順',
+            desc: '降順'
+        },
         loader: false,
     }),
     mounted() {
@@ -96,7 +102,10 @@ export default {
         searchMember() {
             let params = {
                 'searchMemberId': this.memberId,
-                'searchStatus': this.status
+                'searchStatus': this.status,
+                'searchStartDate': this.started_at,
+                'searchEndDate': this.ended_at,
+                'searchSort': this.sort,
             }
             let baseUrl = "http://local.ai-coordination/home";
             let url = baseUrl + "?" + Object.entries(params).map((e) => {
@@ -105,12 +114,12 @@ export default {
                 return `${key}=${value}`;
             }).join("&");
             console.log(url)
-            let queryParams = window.location.search
-            const getSearchParams = new URLSearchParams(queryParams)
-            console.log(getSearchParams)
         },
         clear() {
-
+            this.memberId = '';
+            this.status = '';
+            this.started_at = '';
+            this.ended_at = '';
         },
     }
 }

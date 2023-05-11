@@ -25,11 +25,12 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {   
-        $memberId = $request->get("searchMemberId");
-        $status = $request->get("searchStatus");
-        $started_at = $request->get("searchStartDate");
-        $ended_at = $request->get("searchEndDate");
-        $sort = $request->get("searchSort");
+        $memberId = $request->input("searchMemberId");
+        $status = $request->input("searchStatus");
+        $started_at = $request->input("searchStartDate");
+        $ended_at = $request->input("searchEndDate");
+        $sort = $request->input("searchSort");
+        
 
         $members = $this->memberService->search($memberId, $status, $started_at, $ended_at, $sort);
         

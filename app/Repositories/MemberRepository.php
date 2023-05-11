@@ -83,17 +83,17 @@ class MemberRepository
         $members = $this->member->newQuery();
 
         if($memberId != null) {
-            $members = $members->where("id", "=", "{$memberId}");
+            $members = $members->where("id", $memberId);
         }
 
         if($status != null) {
-            $members = $members->where("status", "=", "{$status}");
+            $members = $members->where("status", "=", $status);
         }
 
         if($started_at != null && $ended_at != null) {
             $members = $members
-                ->where("created_at", ">", "{$started_at}")
-                ->where("created_at", "<","{$ended_at}");
+                ->where("created_at", ">", $started_at)
+                ->where("created_at", "<", $ended_at);
         }
         
         
