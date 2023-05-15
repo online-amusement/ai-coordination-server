@@ -15,4 +15,14 @@ class NewsService
     {
         return $this->newsRepository->getNews();
     }
+
+    public function search($newsId, $startDate, $endDate, $sort)
+    {
+        return $this->newsRepository->search($newsId, $startDate, $endDate, $sort);
+    }
+
+    public function findBy($id)
+    {
+        return $this->newsRepository->findBy($id);
+    }
 }

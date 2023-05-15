@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix("news")->group(function () {
+    Route::get('/', [App\Http\Controllers\NewsController::class, 'index'])->name('news');
+    Route::get('/create', [App\Http\Controllers\NewsController::class, 'create'])->name('news.create');
+    Route::get('/{id}/edit', [App\Http\Controllers\NewsController::class, 'edit'])->name('news.edit');
+    Route::post('/save', [App\Http\Controllers\NewsController::class, 'save'])->name('news.save');
+    Route::get('/{id}/delete', [App\Http\Controllers\NewsController::class, 'delete'])->name('news.delete');
+});
