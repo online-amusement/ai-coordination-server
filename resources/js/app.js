@@ -20,6 +20,8 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('member-component', require('./components/MemberComponent.vue').default);
+Vue.component('news-component', require('./components/news/NewsComponent.vue').default);
+Vue.component('news-edit-component', require('./components/news/NewsEditComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

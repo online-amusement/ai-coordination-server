@@ -57,10 +57,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('メンバー管理') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('news') }}">
+                                        {{ __('お知らせ管理') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('ログアウト') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
