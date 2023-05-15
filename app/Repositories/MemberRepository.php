@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 class MemberRepository
 {
+    const ASC = "asc";
+    const DESC = "desc";
     public function __construct(Member $member, MemberValue $memberValue)
     {
         $this->member = $member;
@@ -74,5 +76,35 @@ class MemberRepository
             ->update([
                 'password' => Hash::make($password),
             ]);
+    }
+
+    public function search($memberId, $status, $started_at, $ended_at, $sort)
+    {
+        $members = $this->member->newQuery();
+
+        if($memberId != null) {
+            $members = $members->where("id", $memberId);
+        }
+
+        if($status != null) {
+            $members = $members->where("status", "=", $status);
+        }
+
+        if($started_at != null && $ended_at != null) {
+            $members = $members
+                ->where("created_at", ">", $started_at)
+                ->where("created_at", "<", $ended_at);
+        }
+        
+        
+        if($sort == 'desc') {
+            return $members
+                ->orderBy('id', self::DESC)
+                ->paginate(10);
+        }else {
+            return $members
+                ->orderBy('id', self::ASC)
+                ->paginate(10);
+        }
     }
 }
