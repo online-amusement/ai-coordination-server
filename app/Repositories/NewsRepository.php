@@ -37,7 +37,7 @@ class NewsRepository
             $news = $news->where("started_at", '>' ,$startDate)->where("ended_at", '<', $endDate);
         }
 
-        if($sort == "desc") {
+        if($sort == "降順") {
             return $news
                 ->orderBy("id", self::DESC)
                 ->paginate(10);
@@ -53,5 +53,30 @@ class NewsRepository
         return $this->news
             ->newQuery()
             ->where("id", $id);
+    }
+
+    public function createOrUpdate($newsId, $newsTitle, $newsDescription, $newsStartedAt, $newsEndedAt)
+    {
+        $news = $this->news->newQuery();
+
+        $image = $news->find($newsId);
+        if(is_null($image)) {
+            $newsImage = null;
+        }else {
+            $newsImage = $image->image;
+        }
+
+        $news = $news->updateOrCreate(
+            ["id" => $newsId],
+            [
+                "title" => $newsTitle, 
+                "description" => $newsDescription, 
+                "image" => $newsImage, 
+                "started_at" => $newsStartedAt, 
+                "ended_at" => $newsEndedAt, 
+            ],
+        );
+
+        return $news;
     }
 }

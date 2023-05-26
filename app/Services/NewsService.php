@@ -25,4 +25,9 @@ class NewsService
     {
         return $this->newsRepository->findBy($id);
     }
+
+    public function createOrUpdate($newsId, $newsTitle, $newsDescription, $newsStartedAt, $newsEndedAt)
+    {
+        return $this->newsRepository->createOrUpdate($newsId, $newsTitle, $newsDescription, $newsStartedAt, $newsEndedAt);
+    }
 }

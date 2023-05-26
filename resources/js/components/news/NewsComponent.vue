@@ -5,7 +5,6 @@
         </div>
         <div class="search-form">
             <form method="GET" action="/news" class="form-area">
-            <input type="hidden" name="referer" v-model="referer">
                 <div class="search-text-inp">
                     <div class="group-form">
                         <div class="searchMemberId">
@@ -44,6 +43,7 @@
                 </div>
             </form>
         </div>
+        <button class="btn btn-primary" type="button"><a :href="'/news/create'" class="create-btn">作成</a></button>
         <div class="contents">
             <table class="table table-bordered">
                 <thead>
@@ -64,7 +64,6 @@
                         <td>{{ el.started_at }}</td>
                         <td>{{ el.ended_at }}</td>
                         <td>
-                            <button class="btn btn-primary" type="button"><a :href="'/news/create'" class="create-btn">作成</a></button>
                             <button class="btn btn-warning" type="button"><a :href="'/news/' + el.id + '/edit'" class="edit-btn">編集</a></button>
                             <button class="btn btn-danger" type="button"><a :href="'/news/' + el.id + '/delete'" class="delete-btn">削除</a></button>
                         </td>
@@ -77,7 +76,7 @@
         </div>
         <div class="paginate">
             <div class="page" v-for="(link,index) in news.links" :key="index">
-                <button :disabled="link.url == null" class="btn btn-secondary" :class="{'pagination-link-enabled': link.url !== null,'pagination-link-active': link.active}"><a @click="searchMember()" :disabled="link.url == null" :href="link.url" class="link-btn">{{ link.label }}</a></button>
+                <button :disabled="link.url == null" class="btn btn-secondary" :class="{'pagination-link-enabled': link.url !== null,'pagination-link-active': link.active}"><a @click.prevent="searchMember(link.label)" :disabled="link.url == null" href="#" class="link-btn">{{ link.label }}</a></button>
             </div>
         </div>
     </div>
@@ -89,36 +88,72 @@ export default {
         newsId: null,
         startDate: null,
         endDate: null,
-        sort: {
-            asc: '昇順',
-            desc: '降順'
-        },
+        sort: [
+            {text: '降順', value: 'desc'},
+            {text: '昇順', value: 'asc'}
+        ],
         loader: false,
     }),
     mounted() {
         console.log(this.news)
     },
     methods: {
-        searchMember() {
-            this.loader = true;
-            let params = {
-                'searchNewsId': this.newsId,
-                'searchStartDate': this.startDate,
-                'searchEndDate': this.endDate,
-                'searchSort': this.sort,
+        searchMember(pageNum) {
+            this.page = pageNum
+            const searchParams = new URLSearchParams(document.location.search)
+            const val = searchParams.get("page")
+            //urlのパラメータの値を変更
+            if(this.page == val) {
+                searchParams.set("page", this.page);
+            }else {
+                searchParams.set("page", this.page);
             }
-            let baseUrl = "http://local.ai-coordination/news";
+            const params = {
+                'searchMemberId': this.memberId ? this.memberId : "",
+                'searchStatus': this.status ? this.status : "",
+                'searchStartDate': this.started_at ? this.started_at : "",
+                'searchEndDate': this.ended_at ? this.ended_at : "",
+                'searchSort': this.sort ? this.sort : "",
+                'page': this.page
+            }
+            for(let param of searchParams) {
+                params[param[0]] = param[1]
+            }
+            let baseUrl = this.news.path;
             let url = baseUrl + "?" + Object.entries(params).map((e) => {
                 let key = e[0];
                 let value = encodeURI(e[1]);
                 return `${key}=${value}`;
-            }).join("&");    
+            }).join("&");
+            location.href = url   
         },
         clear() {
-            this.newsId = '';
-            this.startDate = '';
-            this.endDate = '';
-        },
+            const searchParams = new URLSearchParams(document.location.search)
+            const val = searchParams.get("page")
+            //urlのパラメータの値をset
+            searchParams.set("searchMemberId", "");
+            searchParams.set("searchStatus", "");
+            searchParams.set("searchStartDate", "");
+            searchParams.set("searchEndDate", "");
+            searchParams.set("searchSort", "");
+            searchParams.set("page", "1");
+            const params = {
+                'searchMemberId': this.memberId ? this.memberId : "",
+                'searchStatus': this.status ? this.status : "",
+                'searchStartDate': this.started_at ? this.started_at : "",
+                'searchEndDate': this.ended_at ? this.ended_at : "",
+                'searchSort': this.sort ? this.sort : "",
+                'page': this.page
+            }
+            let baseUrl = this.members.path;
+            console.log(baseUrl)
+            let url = baseUrl + "?" + Object.entries(params).map((e) => {
+                let key = e[0];
+                let value = encodeURI(e[1]);
+                return `${key}=${value}`;
+            }).join("&");
+            location.href = url
+        }
     }
 }
 </script>

@@ -43,8 +43,13 @@ class MemberService
         return $this->memberRepository->updateMemberPassword($token, $password);
     }
 
-    public function search($memberId, $status, $started_at, $ended_at, $sort)
+    public function search($memberId, $status, $startDate, $endDate, $sort)
     {
-        return $this->memberRepository->search($memberId, $status, $started_at, $ended_at, $sort);
+        return $this->memberRepository->search($memberId, $status, $startDate, $endDate, $sort);
+    }
+
+    public function createOrUpdate($memberId, $memberNickName, $memberStatus, $memberPoint)
+    {
+        return $this->memberRepository->createOrUpdate($memberId, $memberNickName, $memberStatus, $memberPoint);
     }
 }

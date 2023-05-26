@@ -30,11 +30,11 @@ Route::middleware(['cors'])->group(function() {
 
     Route::prefix('member')->group(function () {
         Route::middleware(['check.member'])->group(function() {
-            Route::get('/', [App\Http\Controllers\MemberController::class, 'member']);
+            Route::get('/', [App\Http\Controllers\MemberApiController::class, 'member']);
         });
-    Route::post('/email-edit', [App\Http\Controllers\MemberApiController::class, 'memberEmailEdit']);
-    Route::post('/nickname-edit', [App\Http\Controllers\MemberApiController::class, 'memberNicknameEdit']);
-    Route::post('/password-edit', [App\Http\Controllers\MemberApiController::class, 'memberPasswordEdit']);
+        Route::post('/email-edit', [App\Http\Controllers\MemberApiController::class, 'memberEmailEdit']);
+        Route::post('/nickname-edit', [App\Http\Controllers\MemberApiController::class, 'memberNicknameEdit']);
+        Route::post('/password-edit', [App\Http\Controllers\MemberApiController::class, 'memberPasswordEdit']);
     });
 
     Route::prefix("news")->group(function () {

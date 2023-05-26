@@ -27,16 +27,57 @@ class HomeController extends Controller
     {   
         $memberId = $request->input("searchMemberId");
         $status = $request->input("searchStatus");
-        $started_at = $request->input("searchStartDate");
-        $ended_at = $request->input("searchEndDate");
+        $startDate = $request->input("searchStartDate");
+        $endDate = $request->input("searchEndDate");
         $sort = $request->input("searchSort");
         
 
-        $members = $this->memberService->search($memberId, $status, $started_at, $ended_at, $sort);
+        $members = $this->memberService->search($memberId, $status, $startDate, $endDate, $sort);
         
 
         $members = json_encode($members);
 
         return view('home', compact('members'));
+    }
+
+    public function create(Request $request) 
+    {
+        $members = null;
+
+        return view('member-edit', compact("members"));
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $apiToken = $request->bearerToken();
+
+        $members = $this->memberService->findBy("id", "=", $id);
+
+        $members = json_encode($members);
+
+        return view("member-edit", compact("members"));
+    }
+
+    public function save(Request $request)
+    {
+        $memberId = $request->input("id");
+        $memberNickName = $request->input("nickname");
+        $memberStatus = $request->input("status");
+        $memberPoint = $request->input("points");
+ 
+        $member = $this->memberService->createOrUpdate($memberId, $memberNickName, $memberStatus, $memberPoint);
+
+        return redirect()->to("/home");
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $apiToken = $request->bearerToken();
+
+        $members = $this->memberService->findBy("id", "=", $id);
+
+        $members->delete();
+
+        return redirect()->to("/home");
     }
 }
