@@ -8,6 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import moment from "moment"
+moment.locale("ja")
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -19,7 +22,8 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('member-component', require('./components/MemberComponent.vue').default);
+Vue.component('member-component', require('./components/member/MemberComponent.vue').default);
+Vue.component('member-edit-component', require('./components/member/MemberEditComponent.vue').default);
 Vue.component('news-component', require('./components/news/NewsComponent.vue').default);
 Vue.component('news-edit-component', require('./components/news/NewsEditComponent.vue').default);
 

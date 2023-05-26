@@ -44,6 +44,20 @@ class NewsController extends Controller
         return view('news-edit', compact("news"));
     }
 
+    public function save(Request $request)
+    {
+        $newsId = $request->input('id');
+        $newsTitle = $request->input('title');
+        $newsDescription = $request->input('description');
+        $newsStartedAt = $request->input('started_at');
+        $newsEndedAt = $request->input('ended_at');
+
+
+        $news = $this->newsService->createOrUpdate($newsId, $newsTitle, $newsDescription, $newsStartedAt, $newsEndedAt);
+
+        return redirect()->to('/news');
+    }
+
     public function delete(Request $request, $id) 
     {
         $apiToken = $request->bearerToken();

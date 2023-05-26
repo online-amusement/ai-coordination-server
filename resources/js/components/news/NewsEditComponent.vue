@@ -4,12 +4,15 @@
             <h3 class="title-text">お知らせ編集</h3>
         </div>
         <div class="edit-area">
-            <form method="GET" action="/news/save" enctype="multipart/form-data">
-                <input type="hidden" name="id" v-model="id">
+            <form method="POST" action="/news/save" enctype="multipart/form-data">
                 <input type="hidden" name="_token" v-model="csrf">
-                <input type="hidden" name="referer" v-model="referer">
                 <input type="hidden" name="created_at" id="created_at" v-model="created_at">
                 <input type="hidden" name="updated_at" id="updated_at" v-model="updated_at">
+                <div class="id" v-if="news">
+                    <label class="letter-id">お知らせID:</label>
+                    <input type="text" name="id" id="id" class="form-area" v-model="id" readonly>
+                    <strong class="error" v-for="(value,index) in this.errors.id" :key="index">{{ value }}</strong>
+                </div>
                 <div class="title">
                     <label class="letter-title">タイトル:</label>
                     <input type="text" name="title" id="title" class="form-area" v-model="title">
@@ -24,25 +27,27 @@
                     <label class="letter">画像:</label>
                     <input type="file" name="image" id="image" class="form-area">
                     <strong class="error" v-for="(value,index) in this.errors.image" :key="index">{{ value }}</strong>
-                    <img :src="image">
+                    <div class="image-area" v-if="image">
+                        <img :src="image">
+                    </div>
                 </div>
                 <div class="started_at">
                     <label class="letter-date">掲載開始日時:</label>
                     <input type="datetime-local" name="started_at" id="started_at" class="form-area" v-model="started_at">
-                    <strong class="error" v-for="(value,index) in this.errors.started_at" :key="index">{{ value }}</strong>
+                    <strong class="error" v-for="(value,index) in this.errors.started_at" :key="index">{{ value | moment }}</strong>
                 </div>
                 <div class="ended_at">
                     <label class="letter-date">掲載終了日時:</label>
                     <input type="datetime-local" name="ended_at" id="ended_at" class="form-area" v-model="ended_at">
-                    <strong class="error" v-for="(value,index) in this.errors.ended_at" :key="index">{{ value }}</strong>
+                    <strong class="error" v-for="(value,index) in this.errors.ended_at" :key="index">{{ value | moment }}</strong>
                 </div>
                 <div class="edit-btn">
-                    <button v-if="news" class="btn btn-warning" style="width:200px;" type="button">編集</button>
-                    <button v-else class="btn btn-warning" style="width:200px;" type="button">作成</button> 
+                    <button v-if="news" class="btn btn-warning" style="width:200px;" type="submit">編集</button>
+                    <button v-else class="btn btn-warning" style="width:200px;" type="submit">作成</button> 
                 </div>
             </form>
             <div class="edit-btn">
-                <button @click="back()" class="btn btn-secondary" style="width:200px; margin-top:20px;" type="button">戻る</button> 
+                <button onClick="history.back();" class="btn btn-secondary" style="width:200px; margin-top:20px;" type="button">戻る</button> 
             </div>
         </div>
     </div>
@@ -52,15 +57,14 @@ export default {
     props:["news", "old", "errors"],
     data: () => ({
         csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        referer: document.referrer,
         id: null,
         created_at: null,
         updated_at: null,
         title: null,
-        description,
-        image,
-        started_at,
-        ended_at,
+        description: null,
+        image: null,
+        started_at : null,
+        ended_at: null,
     }),
     mounted() {
         console.log(this.news)
@@ -78,6 +82,7 @@ export default {
                 this.id = this.old.id
                 this.title = this.old.title
                 this.description = this.old.description
+                this.image = this.old.image
                 this.started_at = this.old.started_at
                 this.ended_at = this.old.ended_at
             }else {
@@ -85,6 +90,7 @@ export default {
                     this.id = this.news.id
                     this.title = this.news.title
                     this.description = this.news.description
+                    this.image = this.news.image
                     this.started_at = this.news.started_at
                     this.ended_at = this.news.ended_at
                 }
@@ -93,6 +99,11 @@ export default {
     },
     created() {
         this.setValidation();
+    },
+    filters: {
+        moment: function(date) {
+            return moment(date).format('YYYY-MM-DD HH:mm:SS')
+        }
     }
 }
 </script>
@@ -107,6 +118,16 @@ export default {
         border-bottom: 1px solid #000;
         width: 250px;
         text-align: center;
+    }
+}
+.id {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 30px auto;
+    align-items: center;
+    .letter-id {
+        letter-spacing: 5px;
     }
 }
 .description {

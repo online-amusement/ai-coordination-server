@@ -78,7 +78,7 @@ class MemberRepository
             ]);
     }
 
-    public function search($memberId, $status, $started_at, $ended_at, $sort)
+    public function search($memberId, $status, $startDate, $endDate, $sort)
     {
         $members = $this->member->newQuery();
 
@@ -90,14 +90,14 @@ class MemberRepository
             $members = $members->where("status", "=", $status);
         }
 
-        if($started_at != null && $ended_at != null) {
+        if($startDate != null && $endDate != null) {
             $members = $members
-                ->where("created_at", ">", $started_at)
-                ->where("created_at", "<", $ended_at);
+                ->where("created_at", ">", $startDate)
+                ->where("created_at", "<", $endDate);
         }
         
         
-        if($sort == 'desc') {
+        if($sort == '降順') {
             return $members
                 ->orderBy('id', self::DESC)
                 ->paginate(10);
@@ -106,5 +106,25 @@ class MemberRepository
                 ->orderBy('id', self::ASC)
                 ->paginate(10);
         }
+    }
+
+    public function createOrUpdate($memberId, $memberNickName, $memberStatus, $memberPoint)
+    {
+        $members = $this->member->newQuery();
+
+        $memberData = $members->find($memberId);
+        $memberEmail = $memberData->email;
+
+
+        $members = $members->updateOrCreate(
+            ["id" => $memberId],
+            [
+                "nickname" => $memberNickName,
+                "email" => $memberEmail,
+                "status" => $memberStatus,
+                "points" => $memberPoint
+            ],
+        );
+        return $members;
     }
 }
