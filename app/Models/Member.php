@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PaymentHistory;
 
 class Member extends Model
 {
@@ -17,4 +18,8 @@ class Member extends Model
         "status",
         "points"
     ];
+
+    public function payment_histories() {
+        return $this->hasMany(PaymentHistory::class);
+    }
 }

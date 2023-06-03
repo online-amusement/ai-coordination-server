@@ -52,4 +52,9 @@ class MemberService
     {
         return $this->memberRepository->createOrUpdate($memberId, $memberNickName, $memberStatus, $memberPoint);
     }
+
+    public function updatePoint($memberId, $point)
+    {
+        return $this->memberRepository->updatePoint($memberId, $point);
+    }
 }

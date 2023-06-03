@@ -26,6 +26,10 @@ Vue.component('member-component', require('./components/member/MemberComponent.v
 Vue.component('member-edit-component', require('./components/member/MemberEditComponent.vue').default);
 Vue.component('news-component', require('./components/news/NewsComponent.vue').default);
 Vue.component('news-edit-component', require('./components/news/NewsEditComponent.vue').default);
+Vue.component('payment-component', require('./components/payment/PaymentComponent.vue').default);
+Vue.component('payment-edit-component', require('./components/payment/PaymentEditComponent.vue').default);
+Vue.component('summary-component', require('./components/summary/SummaryComponent.vue').default);
+Vue.component('summary-show-component', require('./components/summary/SummaryShowComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

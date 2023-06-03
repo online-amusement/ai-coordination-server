@@ -127,4 +127,12 @@ class MemberRepository
         );
         return $members;
     }
+
+    public function updatePoint($memberId, $point)
+    {
+        return $this->member
+            ->newQuery()
+            ->where("id",$memberId)
+            ->increment('points',$point);
+    }
 }

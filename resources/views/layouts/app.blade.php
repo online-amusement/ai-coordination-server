@@ -63,6 +63,12 @@
                                     <a class="dropdown-item" href="{{ route('news') }}">
                                         {{ __('お知らせ管理') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('payment') }}">
+                                        {{ __('購入管理') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('summary') }}">
+                                        {{ __('購入履歴管理') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

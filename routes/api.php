@@ -41,6 +41,12 @@ Route::middleware(['cors'])->group(function() {
         Route::get("/", [App\Http\Controllers\NewsController::class, "news"]);
     });
 
+    Route::prefix("payments")->group(function () {
+        Route::get("/", [App\Http\Controllers\PaymentController::class, "payments"]);
+        Route::post("/", [App\Http\Controllers\PaymentHistoryController::class, "history"]);
+        Route::get("/history", [App\Http\Controllers\PaymentHistoryController::class, "historyData"]);
+    });
+
     Route::prefix('open-ai')->group(function () {
         Route::post('/image-create', [App\Http\Controllers\OpenAiController::class, 'imageCreate']);
         Route::post('/image-edit', [App\Http\Controllers\OpenAiController::class, 'imageEdit']);
