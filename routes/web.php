@@ -36,4 +36,17 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/save', [App\Http\Controllers\NewsController::class, 'save'])->name('news.save');
         Route::get('/{id}/delete', [App\Http\Controllers\NewsController::class, 'delete'])->name('news.delete');
     });
+
+    Route::prefix('payment')->group(function() {
+        Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('payment');
+        Route::get('/create', [App\Http\Controllers\PaymentController::class, 'create'])->name('payment.create');
+        Route::get('/{id}/edit', [App\Http\Controllers\PaymentController::class, 'edit'])->name('payment.edit');
+        Route::post('/save', [App\Http\Controllers\PaymentController::class, 'save'])->name('payment.save');
+        Route::get('/{id}/delete', [App\Http\Controllers\PaymentController::class, 'delete'])->name('payment.delete');
+    });
+
+    Route::prefix('summary')->group(function() {
+        Route::get('/', [App\Http\Controllers\SummaryController::class, 'index'])->name('summary');
+        Route::get('/{date}/show', [App\Http\Controllers\SummaryController::class, 'show'])->name('summary.show');
+    });
 });
